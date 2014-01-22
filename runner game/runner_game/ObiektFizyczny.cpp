@@ -19,10 +19,8 @@ ObiektFizyczny::ObiektFizyczny(Vec3 _pozycja, TypyObiektow _typObiektu)
 			break;
 	}
 }
-
 void ObiektFizyczny::rysuj()
 {
-	
 	(this->*wskNaRysuj)(); // rysuje aktualny obiekt
 	if(dzieci.empty() == false)
 	{
@@ -30,6 +28,33 @@ void ObiektFizyczny::rysuj()
 		for(it = dzieci.begin(); it != dzieci.end(); ++it);
 		{
 			(*it)->rysuj();
+		}
+	}
+}
+void ObiektFizyczny::debugRysuj()
+{
+	// wspolzedne srodka
+	Vec3 srodek = Vec3();
+	srodek.x = pozycja.x + (szescianAABBmax.x - szescianAABBmin.x)/2;
+	srodek.y = pozycja.y + (szescianAABBmax.y - szescianAABBmin.y)/2;
+	srodek.z = pozycja.z + (szescianAABBmax.z - szescianAABBmin.z)/2;
+	// rysowanie aktualnego
+	glPushMatrix();
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glTranslatef(srodek.x, srodek.y, srodek.z);
+		glScalef
+			(szescianAABBmax.x - szescianAABBmin.x,
+			szescianAABBmax.y - szescianAABBmin.y,
+			szescianAABBmax.z - szescianAABBmin.z);
+		glutWireCube(1.0f);
+	glPopMatrix();
+	// innych rysuje
+	if(dzieci.empty() == false)
+	{
+		vector<ObiektFizyczny*>::iterator it;
+		for(it = dzieci.begin(); it != dzieci.end(); ++it);
+		{
+			(*it)->debugRysuj();
 		}
 	}
 }
@@ -47,7 +72,8 @@ void ObiektFizyczny::sprawdzKolizje(Gracz* gracz)
 		&&
 		szescianAABBmin.z < gracz->szescianAABBmax.z)
 	{
-		// kolizja
+		// kolizja wystapila
+
 		if(dzieci.empty())
 		{
 			// wykonuje swoja kolizje

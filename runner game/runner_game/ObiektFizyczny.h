@@ -23,8 +23,10 @@ public:
 	void (ObiektFizyczny::*wskNaRysuj)();
 	vector<ObiektFizyczny*> dzieci;
 	TypyObiektow typObiektu;
+	Vec3 wielkoscPola;
 	// metody
 	void rysuj();
+	void debugRysuj(); // debugRysuj - zamiast obiektow rysuje ich sfery kolizji
 	void sprawdzKolizje(Gracz* gracz);
 	Vec3 zwrocSrodek();
 	// konstruktory
@@ -33,7 +35,7 @@ public:
 private:
 	// te funkcje nie moga byc widoczne dalej, wywolywalne tylko przez wskazniki w rysuj
 	void rysujPole(); 
-	Vec3 wielkoscPola;
+	
 };
 
 #endif

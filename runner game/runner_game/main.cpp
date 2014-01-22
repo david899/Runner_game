@@ -2,19 +2,17 @@
 /*
  TODO ///////////////////////////////////////////////////
 - uzupelnij przeliczanie na biegunowy
-- rozbudowac klase obiekt, zmienic na roznych obiektow
 - cala kolizja 
 - doczytywanie sie oraz czyszczenie pol na mapie
 - singleton - gracz, mapa, sprawdzKolizje, kamera itd?
 - kamera powinna moc sie latwiej odnosic do gracza zeby nie przekazywac caly czas go jako argument, mo¿e jakiœ globalny get zwracajacy wskaznik na gracza?
 - kamera wziac pod uwage ze nie do konca dobrze dziala gdy wysle polecenie plynnego lotu gdy jest wykonywany inny plynny lot
-- powinienem chyba daæ zakodziæ kamerze obs³ugê ruchu p³ynnego, tzn tak aby sama lecia³a w dane miejsce zamiast wywo³ywaæ j¹ ¿eby przesune³a siê po troszeczku (idzDo itd)
 - uzupelnij update kamery
 - get cel, pozycja czy nie da sie zrobic tak zeby wyrzucalo consty ?
  
  UWAGI //////////////////////////////////////////////////
 - przemysl czy nie wsadziæ gdzieœ wskaŸników zamiast zwyk³ych obiektów
-- !! ZASTANOW SIE  CZY NIE ZROBIC Z kilku bloków kolizyjnych jednego, tzn polaczyc 3 tory w jeden oraz 3 poziomy wysokosci w jeden o "grubosci" aktualnego jednego bloku 
+- debugRysuj - zamiast obiektow rysuje ich sfery kolizji
  */
 #pragma endregion
  
@@ -38,6 +36,7 @@
 #include "Mapa.h"
 #include "Obiekt.h"
 #include "Pole.h"
+#include "ObiektFizyczny.h"
 
 void OnRender();
 void OnReshape(int, int);
@@ -52,7 +51,6 @@ void Update(int);
 void przesunTimerFunc(int);
 GLuint LoadTexture(char *,int,int);
 class Pole;
-class sprawdzKolizje;
 
 void OnReshape(int width, int height) 
 {
@@ -71,13 +69,6 @@ Mapa mapa;
 Kamera kamera = Kamera();
 double czasGry = 0.0; // aktualny czas (a dokladniej - czas z ostatniego wywolania Update())
 bool debug = false;
-
-
-
-
-Vec3 obPoz = Vec3(5.0f, 5.0f, 5.0f);
-ObiektFizyczny ob = ObiektFizyczny(obPoz, typPole);
-
 
 int main(int argc, char* argv[])
 {
@@ -262,7 +253,6 @@ void OnRender()
 		{
 			mapa.debugRysuj();
 		}
-		ob.rysuj();
 		gracz.rysuj();
 	#pragma endregion
 	

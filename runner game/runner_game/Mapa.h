@@ -1,16 +1,16 @@
 #ifndef _MAPA_H
 #define _MAPA_H
 
-#include "Pole.h"
+#include<vector>
+#include"ObiektFizyczny.h"
+using namespace std;
+class ObiektFizyczny;
 
 class Mapa
 {
-	
 public:
 	//zmienne
-	const static int xMax = 3, yMax = 4, zMax = 100;
-	const static int rozmiarPola = 10;
-	Pole plansza[xMax][yMax][zMax]; // tu musze wymyslic jakis sposob na doczytujace sie na biezaco pola oraz czyszczenie tych przebiegnietych
+	vector<ObiektFizyczny*> wektorPol;
 	
 	//konstruktory
 	Mapa();
@@ -18,5 +18,9 @@ public:
 	//metody
 	void rysuj();
 	void debugRysuj();
+	void generujPola(int ilePol);
+	void generujPola(int ileWygenerowac, int ileUsunac);
+private:
+	static const int iloscPolStartowych = 30;
 };
 #endif

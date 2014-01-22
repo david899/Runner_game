@@ -2,31 +2,38 @@
 
 Mapa::Mapa()
 {
-	for (int x = 0; x < xMax; x++)
+	Vec3 pos = Vec3(0,0,0);
+	Vec3 przesuniecie = Vec3(0,0,10.0f);
+	// tworzy int iloscPolStartowych pol na przod oraz wypelnia je losowo 
+	for(int i = 0; i < iloscPolStartowych; i++)
 	{
-		for(int y = 0; y < yMax; y++)
-		{
-			for (int z = 0; z < zMax; z++)
-				plansza[x][y][z] = Pole(x * rozmiarPola, y * rozmiarPola, z * rozmiarPola);
-		}
+		ObiektFizyczny* pole = new ObiektFizyczny(pos,TypyObiektow::typPole);
+		pos += przesuniecie;
+		wektorPol.push_back(pole);
 	}
+	// w powyzszej petli powineinem jeszcze dodawac inne obiekty do moich pol
 }
-
 void Mapa::rysuj()
 {
-
-}
-
-void Mapa::debugRysuj()
-{
-	for (int x = 0; x < xMax; x++)
+	vector<ObiektFizyczny*>::iterator it;
+	for(it = wektorPol.begin(); it != wektorPol.end(); it++)
 	{
-		for(int y = 0; y < yMax; y++)
-		{
-			for (int z = 0; z < zMax; z++)
-				plansza[x][y][z].debugRysuj();
-		}
+		(*it)->rysuj();
 	}
 }
-
-
+void Mapa::debugRysuj()
+{
+	vector<ObiektFizyczny*>::iterator it;
+	for(it = wektorPol.begin(); it != wektorPol.end(); it++)
+	{
+		(*it)->debugRysuj();
+	}
+}
+void Mapa::generujPola(int ilePol)
+{
+	// metoda kasuje pola za graczem oraz dodaje pola przed graczem w ilosci - int ilePol 
+}
+void Mapa::generujPola(int ileWygenerowac, int ileUsunac)
+{
+	// metoda kasuje pola za graczem oraz dodaje pola przed graczem w ilosci - int ilePol 
+}
