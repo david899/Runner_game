@@ -16,6 +16,7 @@ public:
 	Vec3 pozycja; // pozycja gracza jest jego srodkowym punktem (srodek z x,y,z)
 	Vec3 kierunek;
 	float predkosc;
+	Vec3 szescianAABB;
 	Vec3 szescianAABBmin;
 	Vec3 szescianAABBmax;
 	float graczX, graczY, graczZ; //szerekosc, dlugosc, wysokosc
@@ -28,7 +29,9 @@ public:
 
 	//metody
 	void rysuj();
+	void debugRysuj();
 	void dodajPredkosc(float _predkosc);
 	void update();
+	Vec3 zwrocSrodekAABB();
 };
 #endif

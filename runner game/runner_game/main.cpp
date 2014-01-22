@@ -9,6 +9,7 @@
 - kamera wziac pod uwage ze nie do konca dobrze dziala gdy wysle polecenie plynnego lotu gdy jest wykonywany inny plynny lot
 - uzupelnij update kamery
 - get cel, pozycja czy nie da sie zrobic tak zeby wyrzucalo consty ?
+- dopasowac reszte projektu i budowe plikow .h i .cpp tak jak pokazal dr Bazyluk (do przeklepania troche, oprocz samych includow musze pozmieniac klasy na wskazniki do nich)
  
  UWAGI //////////////////////////////////////////////////
 - przemysl czy nie wsadziæ gdzieœ wskaŸników zamiast zwyk³ych obiektów
@@ -130,17 +131,17 @@ int main(int argc, char* argv[])
 		if (key == 50) // 2 na numerycznej
 		{
 			cel.y += 15.0f;
-			kamera.idzDo(cel,3000, Vec3(0,0,0));
+			kamera.idzDo(cel,3000, gracz.pozycja);
 		}
 		if (key == 51) // 3
 		{
 			cel.x += 15.0f;
-			kamera.idzDo(cel,3000,Vec3(0,0,0));
+			kamera.idzDo(cel,3000,gracz.pozycja);
 		}
 		if(key == 52) // 4
 		{
 			cel.x -= 15.0f;
-			kamera.idzDo(cel,3000,Vec3(0,0,0));
+			kamera.idzDo(cel,3000,gracz.pozycja);
 		}
 	#pragma endregion
 	}
@@ -252,6 +253,7 @@ void OnRender()
 		if(debug)
 		{
 			mapa.debugRysuj();
+			gracz.debugRysuj();
 		}
 		gracz.rysuj();
 	#pragma endregion

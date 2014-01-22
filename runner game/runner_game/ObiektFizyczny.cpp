@@ -15,6 +15,7 @@ ObiektFizyczny::ObiektFizyczny(Vec3 _pozycja, TypyObiektow _typObiektu)
 		case typPole:
 			szescianAABBmin = _pozycja;
 			szescianAABBmax = szescianAABBmin + wielkoscPola;
+			szescianAABB = wielkoscPola;
 			wskNaRysuj = &ObiektFizyczny::rysujPole;
 			break;
 	}
@@ -117,4 +118,12 @@ void ObiektFizyczny::rysujPole()
 		glScalef(wielkoscPola.x, wielkoscPola.y, wielkoscPola.z);
 		glutWireCube(1.0f);
 	glPopMatrix();
+}
+Vec3 ObiektFizyczny::zwrocSrodekAABB()
+{
+	Vec3 zwracany = Vec3();
+	zwracany.x = szescianAABBmin.x + (szescianAABBmax.x - szescianAABBmin.x)/2;
+	zwracany.y = szescianAABBmin.y + (szescianAABBmax.y - szescianAABBmin.y)/2;
+	zwracany.z = szescianAABBmin.z + (szescianAABBmax.z - szescianAABBmin.z)/2;
+	return zwracany;
 }

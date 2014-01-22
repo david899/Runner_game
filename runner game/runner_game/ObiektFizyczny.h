@@ -18,6 +18,7 @@ class ObiektFizyczny
 public:
 	// zmienne
 	Vec3 pozycja;
+	Vec3 szescianAABB; // wielkosc szescianu 
 	Vec3 szescianAABBmin;
 	Vec3 szescianAABBmax;
 	void (ObiektFizyczny::*wskNaRysuj)();
@@ -29,6 +30,7 @@ public:
 	void debugRysuj(); // debugRysuj - zamiast obiektow rysuje ich sfery kolizji
 	void sprawdzKolizje(Gracz* gracz);
 	Vec3 zwrocSrodek();
+	Vec3 zwrocSrodekAABB();
 	// konstruktory
 	ObiektFizyczny(Vec3 _pozycja, TypyObiektow _typObiektu);
 	

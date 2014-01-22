@@ -1,8 +1,7 @@
 #ifndef _MAPA_H
 #define _MAPA_H
-
 #include<vector>
-#include"ObiektFizyczny.h"
+
 using namespace std;
 class ObiektFizyczny;
 
@@ -22,5 +21,6 @@ public:
 	void generujPola(int ileWygenerowac, int ileUsunac);
 private:
 	static const int iloscPolStartowych = 30;
+	void wypelnijPoleLosowo(ObiektFizyczny* pole);
 };
 #endif
