@@ -35,18 +35,15 @@ void ObiektFizyczny::rysuj()
 void ObiektFizyczny::debugRysuj()
 {
 	// wspolzedne srodka
-	Vec3 srodek = Vec3();
-	srodek.x = pozycja.x + (szescianAABBmax.x - szescianAABBmin.x)/2;
-	srodek.y = pozycja.y + (szescianAABBmax.y - szescianAABBmin.y)/2;
-	srodek.z = pozycja.z + (szescianAABBmax.z - szescianAABBmin.z)/2;
+	Vec3 srodek = zwrocSrodekAABB();
 	// rysowanie aktualnego
 	glPushMatrix();
-		glColor3f(1.0f, 1.0f, 1.0f);
+		glColor3f(0.0f, 0.0f, 1.0f);
 		glTranslatef(srodek.x, srodek.y, srodek.z);
-		glScalef
-			(szescianAABBmax.x - szescianAABBmin.x,
-			szescianAABBmax.y - szescianAABBmin.y,
-			szescianAABBmax.z - szescianAABBmin.z);
+		glScalef(
+			szescianAABB.x,
+			szescianAABB.y,
+			szescianAABB.z);
 		glutWireCube(1.0f);
 	glPopMatrix();
 	// innych rysuje
@@ -78,7 +75,7 @@ void ObiektFizyczny::sprawdzKolizje(Gracz* gracz)
 		if(dzieci.empty())
 		{
 			// wykonuje swoja kolizje
-			gracz->stosObiektow.push(this);
+			gracz->obiektyKolidujace.push(this);
 		}
 		else
 		{
@@ -92,7 +89,7 @@ void ObiektFizyczny::sprawdzKolizje(Gracz* gracz)
 		}
 	}
 	// nie ma kolizji
-	// nie robie nie, przechodzi mi do kolejnego obiektu
+	// nie robie nic, przechodzi mi do kolejnego obiektu
 }
 Vec3 ObiektFizyczny::zwrocSrodek()
 {

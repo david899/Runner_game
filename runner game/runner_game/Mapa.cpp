@@ -1,5 +1,5 @@
 #include "Mapa.h"
-#include"ObiektFizyczny.h"
+#include "ObiektFizyczny.h"
 
 Mapa::Mapa()
 {

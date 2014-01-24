@@ -20,7 +20,7 @@ public:
 	Vec3 szescianAABBmin;
 	Vec3 szescianAABBmax;
 	float graczX, graczY, graczZ; //szerekosc, dlugosc, wysokosc
-	stack<ObiektFizyczny*> stosObiektow;
+	stack<ObiektFizyczny*> obiektyKolidujace;
 
 	//konstruktory
 	Gracz();

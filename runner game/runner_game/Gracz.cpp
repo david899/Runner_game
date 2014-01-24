@@ -79,4 +79,8 @@ Vec3 Gracz::zwrocSrodekAABB()
 	zwracany.z = szescianAABBmin.z + (szescianAABBmax.z - szescianAABBmin.z)/2;
 	return zwracany;
 }
+//void Gracz::sprawdzKolizje()
+//{
+//
+//}
 
