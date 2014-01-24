@@ -28,7 +28,7 @@ public:
 	// metody
 	void rysuj();
 	void debugRysuj(); // debugRysuj - zamiast obiektow rysuje ich sfery kolizji
-	void sprawdzKolizje(Gracz* gracz);
+	bool sprawdzKolizje(Gracz* gracz);
 	Vec3 zwrocSrodek();
 	Vec3 zwrocSrodekAABB();
 	// konstruktory

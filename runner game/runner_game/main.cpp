@@ -10,10 +10,13 @@
 - uzupelnij update kamery
 - get cel, pozycja czy nie da sie zrobic tak zeby wyrzucalo consty ?
 - dopasowac reszte projektu i budowe plikow .h i .cpp tak jak pokazal dr Bazyluk (do przeklepania troche, oprocz samych includow musze pozmieniac klasy na wskazniki do nich)
- 
- UWAGI //////////////////////////////////////////////////
 - przemysl czy nie wsadziæ gdzieœ wskaŸników zamiast zwyk³ych obiektów
+
+ UWAGI //////////////////////////////////////////////////
 - debugRysuj - zamiast obiektow rysuje ich sfery kolizji
+
+ DOWIEDZ SIE
+- w sprawdzKolizje przy itNaAktualnePole++ dobrze byloby sprawdzac czy ma to znaczenie, bo inaczej wywala sie gdy natrafia na koniec wektora (it wiekszy niz ostatni element wektora)
  */
 #pragma endregion
  
@@ -64,9 +67,7 @@ void OnReshape(int width, int height)
 #pragma endregion
 using namespace std;
 
-
-Gracz gracz;
-Mapa mapa;
+Gracz gracz = Gracz();
 Kamera kamera = Kamera();
 double czasGry = 0.0; // aktualny czas (a dokladniej - czas z ostatniego wywolania Update())
 bool debug = false;
@@ -252,10 +253,11 @@ void OnRender()
 	#pragma region Rysuje tutaj
 		if(debug)
 		{
-			mapa.debugRysuj();
+			gracz.mapa->debugRysuj();
 			gracz.debugRysuj();
 		}
-		mapa.rysuj();
+		gracz.sprawdzKolizje();
+		gracz.mapa->rysuj();
 		gracz.rysuj();
 	#pragma endregion
 	

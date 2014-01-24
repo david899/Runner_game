@@ -4,17 +4,20 @@
 // BYLY JEGO LEWYM DOLNYM PUNKTEM JAK W RESZCIE OBIEKTOW !!!!!!!!!
 // teraz wspolzedna sa srodkiem 
 #include <math.h>
+#include "Mapa.h"
 
 Gracz::Gracz()
-{ // zaczynam na poczatku
+{
+	mapa = new Mapa();
 	graczX = 3.0f; // szereokosc, grubosc, wysokosc solidCuba ktory jest graczem
 	graczY = 16.0f;
 	graczZ = 3.0f;
 
 	// pozycja srodka gracza
+	itNaAktualnePole = mapa->zwrocItNaPolePoczatkowe();
 	pozycja.x = 15.0f;
 	pozycja.y = graczY / 2;
-	pozycja.z = -1.0f;
+	pozycja.z = (*itNaAktualnePole)->pozycja.z;
 
 	kierunek.x = 0.0f;
 	kierunek.y = 0.0f;
@@ -31,6 +34,8 @@ Gracz::Gracz()
 	szescianAABBmax.y += abs(szescianAABBmax.y/2);
 	szescianAABBmax.z += abs(szescianAABBmax.z/2);
 	szescianAABB = Vec3(graczX,graczY,graczZ);
+
+	
 }
 
 ///////////////////////////////////////
@@ -79,8 +84,38 @@ Vec3 Gracz::zwrocSrodekAABB()
 	zwracany.z = szescianAABBmin.z + (szescianAABBmax.z - szescianAABBmin.z)/2;
 	return zwracany;
 }
-//void Gracz::sprawdzKolizje()
-//{
-//
-//}
+void Gracz::sprawdzKolizje()
+{
+	// sprawdzam kolizje od aktualnego pola oraz od kolejnego (aby rozwiazac problem gdy jestem na dwoch polach
+	// jednoczesnie. Jezeli nie ma kolizji na aktualnym to go zwiekszam.
+	if((*itNaAktualnePole)->sprawdzKolizje(this) == true)
+	{
+		(*(itNaAktualnePole+1))->sprawdzKolizje(this); // kolejne pole
+	}
+	else
+	{
+		itNaAktualnePole++;
+		(*itNaAktualnePole)->sprawdzKolizje(this);
+	}
+	while(obiektyKolidujace.empty() == false)
+	{
+		reakcjaNakolizje(obiektyKolidujace.top());
+		obiektyKolidujace.pop();
+	}
+}
+void Gracz::reakcjaNakolizje(ObiektFizyczny* obiekt)
+{
+	switch(obiekt->typObiektu)
+	{
+	case TypyObiektow::typPole:
+		//printf("Wszedlem na pole z = %f",obiekt->zwrocSrodek().z);
+		glPushMatrix();
+			glColor3f(1.0f,0.0f,0.0f);
+			glTranslatef(obiekt->pozycja.x,obiekt->pozycja.y,obiekt->pozycja.z);
+			glutSolidCube(1.0f);
+		glPopMatrix();
+		
+		break;
+	}
+}
 

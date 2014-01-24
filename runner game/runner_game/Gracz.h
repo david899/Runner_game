@@ -9,6 +9,7 @@
 
 using namespace std;
 class ObiektFizyczny;
+class Mapa;
 class Gracz 
 {
 public: 
@@ -21,17 +22,22 @@ public:
 	Vec3 szescianAABBmax;
 	float graczX, graczY, graczZ; //szerekosc, dlugosc, wysokosc
 	stack<ObiektFizyczny*> obiektyKolidujace;
+	Mapa* mapa;
+private:
+	vector<ObiektFizyczny*>::iterator itNaAktualnePole;
 
 	//konstruktory
+public:
 	Gracz();
 
-	///////////////////////////////////////
-
 	//metody
+public:
 	void rysuj();
 	void debugRysuj();
 	void dodajPredkosc(float _predkosc);
 	void update();
 	Vec3 zwrocSrodekAABB();
+	void sprawdzKolizje();
+	void reakcjaNakolizje(ObiektFizyczny* obiekt);
 };
 #endif

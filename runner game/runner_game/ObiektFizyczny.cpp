@@ -56,19 +56,25 @@ void ObiektFizyczny::debugRysuj()
 		}
 	}
 }
-void ObiektFizyczny::sprawdzKolizje(Gracz* gracz)
+bool ObiektFizyczny::sprawdzKolizje(Gracz* gracz)
 {
-	if(	szescianAABBmax.x > gracz->szescianAABBmin.x 
+	// obiekt fizyczny sprawdza czy kolizja wystapila, jezeli wystapila to:
+	// a) obiekt ma dzieci: nie robie nic z kolizja z tym obiektem, sprawdzam kolizje
+	// w glab, czyli czy dzieci maja kolizje (ktores z nich musi miec)
+	// b) obiekt nie ma dzieci: to znaczy ze to z nim koliduje, jest najmniejsza czescia
+	// z drzewa wiec dodaje AKTUALNY(kolidujacy) obiekt do obiektow kolidujacych z graczem
+	// gracz to potem obsluguje
+	if(	szescianAABBmax.x >= gracz->szescianAABBmin.x 
 		&&
-		szescianAABBmin.x < gracz->szescianAABBmax.x 
+		szescianAABBmin.x <= gracz->szescianAABBmax.x 
 		&&
-		szescianAABBmax.y > gracz->szescianAABBmin.y
+		szescianAABBmax.y >= gracz->szescianAABBmin.y
 		&&
-		szescianAABBmin.y < gracz->szescianAABBmax.y
+		szescianAABBmin.y <= gracz->szescianAABBmax.y
 		&&
-		szescianAABBmax.z > gracz->szescianAABBmin.z 
+		szescianAABBmax.z >= gracz->szescianAABBmin.z 
 		&&
-		szescianAABBmin.z < gracz->szescianAABBmax.z)
+		szescianAABBmin.z <= gracz->szescianAABBmax.z)
 	{
 		// kolizja wystapila
 
@@ -87,7 +93,9 @@ void ObiektFizyczny::sprawdzKolizje(Gracz* gracz)
 			}
 			
 		}
+		return true;
 	}
+	return false;
 	// nie ma kolizji
 	// nie robie nic, przechodzi mi do kolejnego obiektu
 }
@@ -107,14 +115,7 @@ Vec3 ObiektFizyczny::zwrocSrodek()
 	
 }
 void ObiektFizyczny::rysujPole()
-{
-	glPushMatrix();
-		Vec3 pozycjaSrodka = zwrocSrodek();
-		glColor3f(1.0f,1.0f,1.0f);
-		glTranslatef(pozycjaSrodka.x, pozycjaSrodka.y, pozycjaSrodka.z);
-		glScalef(wielkoscPola.x, wielkoscPola.y, wielkoscPola.z);
-		glutWireCube(1.0f);
-	glPopMatrix();
+{ // pola nie rysuje
 }
 Vec3 ObiektFizyczny::zwrocSrodekAABB()
 {

@@ -76,3 +76,8 @@ void Mapa::wypelnijPoleLosowo(ObiektFizyczny* pole)
 {
 	// jakies dodawanie obiektow do pola
 }
+vector<ObiektFizyczny*>::iterator Mapa::zwrocItNaPolePoczatkowe()
+{
+	vector<ObiektFizyczny*>::iterator it = wektorPol.begin();
+	return it;
+}
